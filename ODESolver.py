@@ -3,14 +3,16 @@ from scitools.std import pi
 class RungeKutta4th:
     def __init__(self, s_init, v_init, m, beta, k, g): 
         self.s_init, self.v_init, self.m, self.beta, self.k, self.g = float(s_init) ,float(v_init), float(m), float(beta), float(k), float(g)
-        
+       
+    #Function of stretch 
     def f_s(self, u1):
         return u1
     
+    #Function of velocity
     def f_v(self, u0, u1):
-        return 1./self.m*(self.g - self.beta*u1 - self.k*u0)
+        return 1./self.m*(self.m*self.g - self.beta*u1 - self.k*u0)
     
-
+    #Calculation of stretch, velocity and time arrays
     def solve(self, total_time, dt):
         f_s = self.f_s
         f_v = self.f_v
@@ -23,7 +25,7 @@ class RungeKutta4th:
         S[0] = self.s_init
         V[0] = self.v_init
                 
-        #Time loop
+        #Time loop of Runge Kutta 4th algorithm
         for i in range(N):
             k1_s = dt*f_s(V[i])
             k1_v = dt*f_v(S[i], V[i])
